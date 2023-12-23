@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n,a,b;
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    cin>>n;
+    while(n--){
+        cin>>a>>b;//column , max of water that can use
+        vector<int>v;
+        for(int i=0;i<a;i++){
+            int x;
+            cin>>x;
+            v.push_back(x);
+        }
+        sort(v.begin(),v.end());
+        long long l=1,r=INT_MAX;
+        bool check=false;
+        int keep;//keep answer
+        while(l<r){
+            long long mid=(l+r)/2;//mid=height
+            long long temt=0;
+            for(int j=0;j<v.size();j++){
+                if(mid>=v[j]){
+                    temt+=mid-v[j];//amount of water that can fill up the tank
+                }
+            }
+            if(temt==b){
+                cout<<mid<<endl;
+                check=true;
+                break;
+            }
+            else if(temt<b){
+                keep=mid;
+                l=mid+1;
+            }
+            else r=mid;
+        }
+        if(check==false)cout<<keep<<endl;
+    }
+    return 0;
+}

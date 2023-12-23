@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+//  ad-hoc problem
+int n;
+string a;
+
+int solve(string x){
+
+    bool check=false;
+    if(x[0]=='B'||x[x.length()-1]=='B')check=true;
+    else{
+        for(int i=0;i<x.length()-1;i++){
+            if(x[i]==x[i+1]&&x[i]=='B'){
+                check=true;
+            }
+        }
+    }
+
+    int counta=0;
+    vector<int>keep;
+    for(int i=0;i<x.length();i++){
+        if(x[i]=='A')counta++;
+        else if(x[i]=='B'&&counta>0){
+            keep.push_back(counta);
+            counta=0;
+        }
+    }
+    if(counta>0)keep.push_back(counta);
+
+    int anss=0;
+    if(keep.empty()){
+        return 0;
+    }
+    sort(keep.begin(),keep.end());
+    if(check==true)anss+=keep[0];
+    for(int i=1;i<keep.size();i++)anss+=keep[i];
+    return anss;
+
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cin>>a;
+        int ans=solve(a);
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+
+//1873G ABBC or BACB

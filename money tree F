@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//
+key---> define variable to keep contiguous postion that is followed rules in problem -->can use it to quicksum
+//
+
 int main()
 {
     ios_base::sync_with_stdio(0);cin.tie(0);

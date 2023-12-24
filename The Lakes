@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define pi pair<int,pair<int,int>>
+int x,y,v[2010][2010];
+bool visited[2010][2010];
+
+int dfs(int xa,int ya){
+    int ans=v[xa][ya];
+    visited[xa][ya]=true;
+    if(xa-1>=0&&!visited[xa-1][ya]&&v[xa-1][ya]!=0)ans+=dfs(xa-1,ya);
+    if(xa+1<x&&!visited[xa+1][ya]&&v[xa+1][ya]!=0)ans+=dfs(xa+1,ya);
+    if(ya-1>=0&&!visited[xa][ya-1]&&v[xa][ya-1]!=0)ans+=dfs(xa,ya-1);
+    if(ya+1<y&&!visited[xa][ya+1]&&v[xa][ya+1]!=0)ans+=dfs(xa,ya+1);
+    return ans;
+}
+
+void solve(){
+    cin>>x>>y;
+    int ans=0;
+    for(int i=0;i<x;i++)for(int j=0;j<y;j++)cin>>v[i][j];
+    for(int i=0;i<x;i++)for(int j=0;j<y;j++)visited[i][j]=false;
+    for(int i=0;i<x;i++)for(int j=0;j<y;j++){
+        if(!visited[i][j]&&v[i][j]!=0){
+            ans=max(ans,dfs(i,j));
+        }
+    }
+    cout<<ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int n;
+    cin>>n;
+    while(n--){
+        solve();
+    }
+    return 0;
+}

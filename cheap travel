@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int n,m,x,y,ans,anotherprice,temt;
+    cin>>n>>m>>x>>y;
+    int priceonlyoneticket=n*x;
+    if(m>=n)ans=min(y,x*n);
+    else{
+        anotherprice=(y*(n/m));
+        if(n-(m*(n/m))<=m) temt=min((n-(m*(n/m)))*x,y);
+        else  temt=min((n-(m*(n/m)))*x,y*(n%m));
+        anotherprice=anotherprice+temt;
+        ans=min(priceonlyoneticket,anotherprice);
+    }
+    cout<<ans;
+    return 0;
+}

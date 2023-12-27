@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define p push_back
+
+ll a[3][100100],n,x;
+
+void solve(){
+    cin>>n;
+    for(int i=0;i<3;i++)for(int j=1;j<=n;j++)cin>>a[i][j];
+    vector<vector<vector<vector<ll>>>>dp(n+1,vector<vector<vector<ll>>>(2,vector<vector<ll>>(2,vector<ll>(2,0))));//dp keeps maximum friends
+
+    for(int day=0;day<n;day++){
+        for(int i=0;i<=1;i++)for(int j=0;j<=1;j++)for(int k=0;k<=1;k++){
+            if(k==0){
+                dp[day+1][i][j][1]=max(dp[day+1][i][j][1],dp[day][i][j][k]+a[2][day+1]);
+            }
+             if(j==0){
+                dp[day+1][i][1][k]=max(dp[day+1][i][1][k],dp[day][i][j][k]+a[1][day+1]);
+            }
+            if(i==0){
+                dp[day+1][1][j][k]=max(dp[day+1][1][j][k],dp[day][i][j][k]+a[0][day+1]);
+            }
+            dp[day+1][i][j][k]=max(dp[day+1][i][j][k],dp[day][i][j][k]);
+        }
+    }
+    cout<<dp[n][1][1][1]<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    cin>>x;
+    while(x--)solve();
+    return 0;
+}

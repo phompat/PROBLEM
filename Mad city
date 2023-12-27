@@ -1,0 +1,74 @@
+//  ****first thing i have to know----> (n nodes , n edges , 1 component  ---> exactly one cycle) ***
+
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<bool>visited(201000,false);
+vector<int>adj[201000];
+int n,x,m,v,nodetocycle=-1,distm,distv,building;
+
+bool dfs(int u,int p){    //**find the node that Valeriu can go into the cycle and if Valeriu is on hte brance, there is onnly one  edge that can go into the cycle
+    visited[u]=true;
+    for(int g:adj[u]){
+        if(visited[g]&&g!=p){
+            nodetocycle=g;
+            return true;
+        }
+        if(!visited[g]){
+            if(dfs(g,u)){
+                return true;
+            }
+        }
+    }
+    visited[u]=false;
+    return false;
+}
+
+int bfs(int h){   //**shortest path
+    queue<pair<int,int>>q;
+    q.push({h,0});
+    while(!q.empty()){
+        int xa=q.front().first;//building
+        int ya=q.front().second;//number
+        q.pop();
+        if(xa==nodetocycle){
+            return ya;
+        }
+        if(visited[xa])continue;
+        visited[xa]=true;
+        for(int temt:adj[xa]){
+            if(!visited[temt])q.push({temt,ya+1});
+        }
+    }
+}
+
+void solve(){
+    cin>>building>>m>>v;
+    for(int i=0;i<building;i++){
+        int temt1,temt2;
+        cin>>temt1>>temt2;
+        adj[temt1].push_back(temt2);
+        adj[temt2].push_back(temt1);
+    }
+    visited.assign(200001,false);
+    dfs(v,-1);//find the first node that V can go into the cycle
+    visited.assign(200001,false);
+    if(m==nodetocycle)distm=0;
+    else distm=bfs(m);
+    visited.assign(200001,false);
+    
+    if(v==nodetocycle)distv=0;
+    else distv=bfs(v);
+    
+    if(distv<distm)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+    for(int i=1;i<=building;i++)adj[i].clear();
+
+}
+
+
+int main(){
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    cin>>x;
+    while(x--)solve();
+}

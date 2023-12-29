@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+void solve(){
+    ll n,x;
+    cin>>n;
+    vector<int>a;
+    for(int i=0;i<n;i++){
+        cin>>x;
+        a.push_back(x);
+    }
+    ll l=0,r=n-1;
+    ll maxalice=0,maxbob=0,valice=0,vbob=0,prevalice=0,prevbob=0,countt=0;
+    bool check=false;
+    ll round=0;
+    while(l<=r){
+        valice=0;
+        if(round%2==0){
+            while(valice<=prevbob&&l<=r){
+                valice+=a[l],l++;
+            }
+            if(valice>prevbob){
+                prevalice=valice,maxalice+=valice,countt++;
+            }
+            else{
+                maxalice+=valice,countt++;
+                break;
+            }
+        }
+        else{
+            vbob=0;
+            while(vbob<=prevalice&&l<=r){
+                vbob+=a[r],r--;
+            }
+            if(vbob>prevalice){
+                prevbob=vbob,maxbob+=vbob,countt++;
+            }
+            else{
+                maxbob+=vbob,countt++;
+                break;
+            }
+        }
+        round++;
+    }
+    cout<<countt<<" "<<maxalice<<" "<<maxbob<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

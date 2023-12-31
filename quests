@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+vector<ll>a(200002),b(200001),dp(200002),maxb(200002);
+
+void solve(){
+    ll n,k;
+    cin>>n>>k;
+    dp.clear(),maxb.clear();
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+        if(i==1)dp[i]=a[i];
+        else dp[i]=dp[i-1]+a[i];
+    }
+    for(int i=1;i<=n;i++){
+        cin>>b[i];
+        if(i==1)maxb[i]=b[i];
+        else maxb[i]=max(maxb[i-1],b[i]);
+    }
+    long long ans=0;
+    if(n>=k){  //when number of quest can complete(k) <= number of quest (n)
+        for(int i=1;i<=k;i++){
+         long long  temt=dp[i]+(maxb[i]*(k-i));
+         ans=max(ans,temt);
+        }
+    }
+    else{   //when number of quest can complete(k) > number of quest(n)
+        for(int i=1;i<=n;i++){
+          long long  temt=dp[i]+(maxb[i]*(k-i));
+          ans=max(ans,temt);
+        }
+    }
+    cout<<ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+    return 0;
+}

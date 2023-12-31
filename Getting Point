@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+void solve(){
+    ll day,target,p1,p2,week;
+    cin>>day>>target>>p1>>p2;
+    if(day%7!=0)week=day/7+1;
+    else week=day/7;
+    //check for the total problem that he can solve in the given day
+    ll l=0,r=day;
+    ll ans=0;
+    while(l<=r){
+        ll mid=(l+r)/2;//days
+        ll problem;
+        if(mid*2>=week)problem=week;
+        else problem=mid*2;
+        if((mid*p1)+(problem*p2)>=target){
+            ans=mid;
+            r=mid-1;
+        }
+        else l=mid+1;
+    }
+    cout<<day-ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

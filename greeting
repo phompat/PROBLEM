@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+/* starting position 1 < starting position 2 and finished position 1 > finished position 2  --> will meet
+   starting position 1 > starting position 2 and finished position 1 < finished position 2  --> will meet
+    --
+     |
+     V
+    look at the interval
+
+*/
+
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, less<int>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update> ordered_set;
+
+void solve(){
+    vector<pair<ll,ll>>a;
+    a.clear();
+    ll n;
+    cin>>n;
+    ordered_set k; //*
+    for(int i=0;i<n;i++){
+        ll x,y;
+        cin>>x>>y;
+        a.push_back({x,y});
+        k.insert(y);
+    }
+    sort(a.begin(),a.end());
+    ll ans=0;
+    for(int i=0;i<a.size();i++){
+        ans+=k.order_of_key(a[i].second);//find the count of elements less than a[i].second
+        k.erase(a[i].second);
+    }
+    cout<<ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+
+    return 0;
+}

@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 string a,b;
-//  there is only 2 syllables which are CV , CVC
+
+//  there is only 2 syllables which are CV , CVC --> i need to read the problem more throughly.
+
 void solve(){
     int n;
     cin>>n>>a;

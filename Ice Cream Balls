@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/*  if number of the ball has the same for example 1,1,1,2,3 -->{1,1},{1,2},{1,3}.{2,3} -->wanting the minimum of the number of the ball
+                                                                                        --> the least duplicate numbers that will be possible
+
+    ordered pair that is distinct  such as 1,2,3,4,5 --> {1,2},{1,3},... --> formula to find the number of  ordered pair that is distinct = (n*(n-1))/2
+
+    for the leftover , เลขที่ซ้ำก็  such as  {1,1},{2,2},....   -->  +1 each time
+*/
+
+void solve(){
+    ll n;
+    cin>>n;
+    ll l=0,r=1e10,ans=0;
+    while(l<=r){
+        ll mid=(l+r)/2;//mid means ==> balls that has distinct number on it
+        if(1LL*(mid*(mid-1))/2<=n){
+            ans=mid;
+            l=mid+1;
+        }
+        else{
+            r=mid-1;
+        }
+    }
+    ans=ans+(n-(1LL*ans*(ans-1)/2));
+    cout<<ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+    return 0;
+}

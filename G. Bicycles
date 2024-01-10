@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define p push_back
+ll dp[1001][1001];
+bool visited[1001][1001];
+
+void solve(){
+     ll n,m;
+     cin>>n>>m;
+     vector<pair<ll,ll>>a[10000];
+     for(int i=0;i<=n;i++)a[i].clear();
+     for(int i=0;i<m;i++){
+        int x,y,z;
+        cin>>x>>y>>z;
+        a[x].p({y,z}),a[y].p({x,z});//node,distance
+     }
+     for(int i=0;i<=1000;i++){
+        for(int j=0;j<=1000;j++){
+            dp[i][j]=LLONG_MAX;
+            visited[i][j]=false;
+        }
+     }
+     vector<ll>s(n+10);
+     s.clear();
+     ll maxx=0;
+     for(int i=1;i<=n;i++){
+        cin>>s[i];
+        maxx=max(maxx,s[i]);
+     }
+    priority_queue<pair<ll,pair<ll,ll>>>q;
+     dp[1][s[1]]=0;
+     q.push({0,{1,s[1]}});
+     while(!q.empty()){
+        ll u=q.top().first;//time
+        ll v=q.top().second.first;//node
+        ll w=q.top().second.second;//previous speed
+        q.pop();
+        if(visited[v][w])continue;
+        visited[v][w]=true;
+        for(auto temt:a[v]){  // temt.first=node  , temt.second=distance
+            int t=min(w,s[temt.first]);
+            if(dp[temt.first][t]>dp[v][w]+(temt.second*w)){
+                dp[temt.first][t]=dp[v][w]+(temt.second*w);
+                q.push({-dp[temt.first][t],{temt.first,t}}); // - because i  want a priority_queue to behave like a min heap
+            }
+        }
+     }
+     ll ans=LLONG_MAX;
+     for(int i=0;i<=maxx;i++)ans=min(ans,dp[n][i]);
+     cout<<ans<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int  t;
+    cin>>t;
+    while(t--){
+        solve();
+    }
+}

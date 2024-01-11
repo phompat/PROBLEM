@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/* (A-B) should be the maximum for Alice and (A-B) should be the minimum for Bob  ==> A high , B low = Alice should retain maximum and Bob should lose maximum too
+
+    for example  Alice:1 Bob:500 --> for Bob ,Bob will get 500 marbles and A will lose the opportunities to get 1 ,so the net benefit of Bob is 501
+*/
+void solve(){
+
+    ll n;
+    cin>>n;
+    vector<ll>a(n+1),b(n+1);
+    for(int i=0;i<n;i++)cin>>a[i];
+    for(int i=0;i<n;i++)cin>>b[i];
+    vector<pair<ll,ll>>benefits;
+    for(int i=0;i<n;i++)benefits.push_back({a[i]+b[i],i});
+    sort(benefits.begin(),benefits.end());
+    ll countt=0;
+    for(int i=benefits.size()-1;i>=0;i--){
+        if(countt%2==0){
+            a[benefits[i].second]--;
+            b[benefits[i].second]=0;
+        }
+        else{
+            b[benefits[i].second]--;
+            a[benefits[i].second]=0;
+        }
+        countt++;
+    }
+    ll ans=0;
+    for(int i=0;i<n;i++)ans+=(a[i]-b[i]);
+    cout<<ans<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

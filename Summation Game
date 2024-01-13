@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/* bob want to minimize it as possible as he can so bob  must chooses all the number of elements that he can to minimize the value  */
+void solve(){
+    ll n,x,y,ans=INT_MIN;;
+    cin>>n>>x>>y;
+    vector<ll>a(n),dp(n);
+    ll all=0;
+    for(int i=0;i<n;i++){
+        cin>>a[i],all+=a[i];
+    }
+    sort(a.begin(),a.end(),greater<ll>());
+    for(int i=0;i<n;i++){
+        if(i==0)dp[i]=a[i];
+        else dp[i]=dp[i-1]+a[i];
+    }
+    for(int i=-1;i<x;i++){// for -1 means Alice does not remove any element
+        ll temt=all;
+        if(i==-1){
+            ll left=n-i-1;
+            if(left>0){
+                if(left>=y)temt-=2*(dp[i+y]);
+                else temt-=2*(dp[n-1]);
+            }
+        }
+        else{
+            temt=all-dp[i];
+            ll left=n-i-1;
+            if(left>0){
+                if(left>=y)temt-=2*(dp[i+y]-dp[i]);
+                else temt-=2*(dp[n-1]-dp[i]);
+            }
+        }
+        ans=max(ans,temt);
+    }
+    cout<<ans<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

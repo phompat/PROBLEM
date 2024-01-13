@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+/*  like parentheses  (      )
+                        (        )
+                            (   )
+
+    i want the minimum of sum of the end point(r) should be the least and the start point(l) should be the maximum and l<r
+    Therefore i can give the symbol of the start points as (*) and the end point (*) and i mix them and sort to find like a parentheses above.
+
+*/
+
+void solve(){
+    ll n;
+    cin>>n;
+    stack<ll>st;
+    vector<ll>a(n),b(n),ans,d;
+    ans.clear(),d.clear();
+    vector<pair<ll,char>>c;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        c.push_back({a[i],'*'});
+    }
+    for(int i=0;i<n;i++){
+        cin>>b[i];
+        c.push_back({b[i],'+'});
+    }
+    sort(c.begin(),c.end());
+    for(int i=0;i<n;i++){
+        ll x;
+        cin>>x;
+        d.push_back(x);
+    }
+    sort(d.begin(),d.end());
+    for(int i=0;i<c.size();i++){
+        if(c[i].second=='*')st.push(c[i].first);
+        else if(c[i].second=='+'){
+            ans.push_back(c[i].first-st.top());
+            st.pop();
+        }
+    }
+    ll answer=0;
+    sort(ans.begin(),ans.end());
+    for(int i=0;i<ans.size();i++)answer+=ans[i]*d[n-i-1];
+    cout<<answer<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

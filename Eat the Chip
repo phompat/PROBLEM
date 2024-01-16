@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll h,w,a,b,c,d;
+
+void solve(){
+    cin>>h>>w>>a>>b>>c>>d;
+    bool check=false;
+    ll lb=b,rb=b,ld=d,rd=d;
+    if(c<a){
+        cout<<"Draw"<<endl;
+        return;
+    }
+    if(abs(a-c)%2==0){  //bob can win
+        ll add =abs(a-c)/2;
+        if(a+add>h||c-add<1){
+            cout<<"Draw"<<endl;
+            return;
+        }
+        lb=max(1LL,b-add),rb=min(w,b+add);//for alice
+        ld=max(1LL,d-add),rd=min(w,d+add);//for bob
+        if(lb>=ld&&rb<=rd)cout<<"Bob"<<endl;
+        else cout<<"Draw"<<endl;
+    }
+    else{
+        ll add =abs(a-c)/2;     // alice can win
+         if(a+add+1>h||c-add<1){
+            cout<<"Draw"<<endl;
+            return;
+        }
+        lb=max(1LL,b-add-1),rb=min(w,b+add+1);
+        ld=max(1LL,d-add),rd=min(w,d+add);
+        if(lb<=ld&&rb>=rd)cout<<"Alice"<<endl;
+        else cout<<"Draw"<<endl;
+    }
+
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+
+}
+

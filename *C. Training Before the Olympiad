@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+/*
+    -Masha want to maximize ,so from this problem Floor((a[i]+a[j])/2)*2 -->if he want to maximize he need to find two odd numbers to change it into
+          even number and he does not lose any point.
+
+    -Olya want to minimize  ,so she has to find odd + even number so from  Floor((a[i]+a[j])/2)*2  the score will be -1 from this equation
+
+*/
+
+void solve(){
+    ll n;
+    cin>>n;
+    vector<ll>a(n+1),odd(n+1,0),dp(n+1,0);
+    for(int i=0;i<n;i++)cin>>a[i];
+    for(int i=0;i<n;i++){
+        if(a[i]%2==1){
+            if(i==0)odd[i]=1;
+            else odd[i]+=odd[i-1]+1;
+        }
+        else{
+            if(i>0)odd[i]=odd[i-1];
+        }
+        if(i==0)dp[i]=a[i];
+        else dp[i]+=dp[i-1]+a[i];
+    }
+
+    for(int i=0;i<n;i++){
+        if(i==0)cout<<a[i]<<" ";
+        else{
+            /*for every 3 odd numbers the score will be decrease by 1 because of OLya that she wants to minimize it so she has to find odd(which the odd is the last one odd) + even
+              ---> to minus 1 .
+            */
+
+            ///if odd[i]%3==1  the last one odd number will be Olya turn and that is why i have to - 1
+            if(odd[i]%3==1)cout<<dp[i]-(odd[i]/3)-1<<" ";
+            else cout<<dp[i]-(odd[i]/3)<<" ";
+        }
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long  long
+char a[1001][1001];
+bool visited[1001][1001],visited1[1001][1001];
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll n,m;
+    cin>>n>>m;
+    queue<pair<int,int>>q;
+    int countt=0;
+    for(int i=0;i<n;i++)for(int j=0;j<m;j++)cin>>a[i][j];
+    bool check=false;
+    for(int i=0;i<n;i++)for(int j=0;j<m;j++){
+        if(a[i][j]=='.'){
+            q.push({i,j});
+            check=true;
+            break;
+        }
+        if(check)break;
+    }
+
+    while(!q.empty()){
+        int u=q.front().first,v=q.front().second;
+        q.pop();
+        if(visited[u][v])continue;
+        visited[u][v]=true;
+        a[u][v]='*';
+        for(int i=-1;i<=1;i++)for(int j=-1;j<=1;j++){
+            if(i==0&&j==0)continue;
+            if(i!=0&&j!=0)continue;
+            int xa=u+i,ya=v+j;
+            if(xa<0||xa>=n||ya<0||ya>=m)continue;
+            if(visited[xa][ya])continue;
+            if(a[xa][ya]=='X')continue;
+            if(a[xa][ya]=='*')continue;
+            q.push({xa,ya});
+        }
+    }
+
+    int ans=0;
+    for(int i=0;i<n;i++)for(int j=0;j<m;j++){
+       int temt=0;
+       if(a[i][j]=='X'&&!visited1[i][j]){
+            q.push({i,j});
+            while(!q.empty()){
+                int u=q.front().first;
+                int v=q.front().second;
+                q.pop();
+                if(visited1[u][v])continue;
+                visited1[u][v]=true;
+                if(u-1>=0&&a[u-1][v]=='*')temt++;
+                if(u+1<n&&a[u+1][v]=='*')temt++;
+                if(v-1>=0&&a[u][v-1]=='*')temt++;
+                if(v+1<m&&a[u][v+1]=='*')temt++;
+                for(int k=-1;k<=1;k++)for(int l=-1;l<=1;l++){
+                    if(k==0&&l==0)continue;
+                    if(k!=0&&l!=0)continue;
+                    int xa=u+k,ya=v+l;
+                    if(xa<0||xa>=n||ya<0||ya>=m)continue;
+                    if(visited1[xa][ya])continue;
+                    if(a[xa][ya]=='X')q.push({xa,ya});
+                }
+            }
+            ans=max(temt,ans);
+       }
+    }
+    cout<<ans<<"\n";
+    return 0;
+}
+

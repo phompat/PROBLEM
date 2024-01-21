@@ -28,10 +28,11 @@ void solve(){
     vector<ll>a(n),b(k);
     for(int i=0;i<n;i++)cin>>a[i];
     for(int i=0;i<k;i++)cin>>b[i];
-    for(int i=0;i<=n*2&&i<d;i++){ //the boundary for +1 that every elements in the array will be greater that the position of it.
+    for(int i=0;i<=n*2&&i<d;i++){ 
+        //n*2 --> the boundary for +1 that every elements in the array will be greater that the position of it.
         ll temt=0;
         for(int j=0;j<n;j++)temt+=(a[j]==(j+1));
-        ans=max(ans,temt+(d-i-1)/2);
+        ans=max(ans,temt+(d-i-1)/2);   //(d-1-i)/2 is what i said above after array=[0,0,0,0,..]
         int index=i%k;
         for(int j=0;j<b[index];j++)a[j]++;
     }

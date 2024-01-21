@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+//just easy greedy
+void solve(){
+    string a;
+    cin>>a;
+    int keep1=0,keep0=0;
+    for(int i=0;i<a.length();i++){
+        if(a[i]=='0')keep0++;
+        else keep1++;
+    }
+    bool check=false;
+    for(int i=0;i<a.length();i++){
+        if(a[i]=='1'&&keep0>0)keep0--;
+        else if(a[i]=='0'&&keep1>0)keep1--;
+        else{
+            cout<<a.length()-i<<"\n";
+            check=true;
+            break;
+        }
+    }
+    if(check==false)cout<<"0"<<"\n";
+
+
+
+
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+    return 0;
+}

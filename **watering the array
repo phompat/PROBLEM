@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/*
+    great problem 
+    
+        there are two way to  ( 1.)  +1 or  ( 2.)  count all elements that a[i]==i and turns them into o    
+
+
+            if you choose (2.),after that you have an array[0,0,..]  For example :  0 0 0 0 0 0
+                                                                                    1 1 0 0 0 0
+                                                                                    2 2 1 1 0 0
+                                                                                    3 3 2 2 1 0
+                                                                                    4 4 3 3 2 1   
+                                                                    
+                                                        Therefore there is only one position that is fit for the problem 
+                                                        , you will get +1 each time that you choose (1.) 
+                                                        
+                
+        so your task is to find the maximum score that is fit to the condition in the problem 
+                                                            
+            
+*/
+
+void solve(){
+    ll n,k,d,ans=0;
+    cin>>n>>k>>d;
+    vector<ll>a(n),b(k);
+    for(int i=0;i<n;i++)cin>>a[i];
+    for(int i=0;i<k;i++)cin>>b[i];
+    for(int i=0;i<=n*2&&i<d;i++){ //the boundary for +1 that every elements in the array will be greater that the position of it.
+        ll temt=0;
+        for(int j=0;j<n;j++)temt+=(a[j]==(j+1));
+        ans=max(ans,temt+(d-i-1)/2);
+        int index=i%k;
+        for(int j=0;j<b[index];j++)a[j]++;
+    }
+    cout<<ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

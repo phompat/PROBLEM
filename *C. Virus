@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/*
+    consider it as each range the has uninfected houses.
+*/
+void solve(){
+    ll n,m;
+    cin>>n>>m;
+    vector<ll>a(m),v;
+    for(int i=0;i<m;i++)cin>>a[i];
+    sort(a.begin(),a.end());
+
+    for(int i=0;i<m-1;i++)v.push_back(a[i+1]-a[i]-1);
+    if((n-a[m-1])+(a[0]-1)>0)v.push_back((n-a[m-1])+(a[0]-1));//the number of uninfected houses from the next house of the last infected house to the previous before the first infected house (see as circle)
+    sort(v.begin(),v.end());
+
+    ll time=0,ans=0;
+    for(int i=v.size()-1;i>=0;i--){
+        int temt=v[i]-2*time;
+        if(temt>2){
+            ans+=(temt-1);
+            time+=2;
+        }
+        else if(temt>0){
+            ans++;
+            time++;
+        }
+    }
+    cout<<n-ans<<endl;
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+
+}

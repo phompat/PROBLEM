@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+/*
+    for example   initial J: 100 20 10 6 5 4
+                          G: 85 17 12 3 2 1       -->  1st J:100 85 20 10 6 5
+                                                          G:17 12 4 3 2 1     ---> 2nd J:1 85 20 10 6 5
+                                                                                       G:100 17 12 4 3 2   ---> 3rd J:100 85 20 10 6 5
+                                                                                                                    G:17 12 4 3 2 1
+
+
+
+    From observation  ---> since k=2 , i have to check what is the real minimum value and the highest value as well
+*/
+
+void solve(){
+    ll n,m,k,ans=0;
+    cin>>n>>m>>k;
+    vector<ll>a(n),b(m);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        ans+=a[i];
+    }
+    for(int i=0;i<m;i++)cin>>b[i];
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    ll jmax=a[a.size()-1],jmin=a[0];
+    ll gmax=b[b.size()-1],gmin=b[0];
+    ll keep=min(jmin,gmin); //
+    if(k==1){
+        ans=max(ans,ans-jmin+gmax);
+    }
+    else if(k>1){
+        jmax=max(jmax,gmax);
+        ans=max(ans,ans-jmin+gmax);
+        if(k%2==0){
+            ll temt=ans;
+            temt-=jmax;
+            temt+=keep;
+            ans=temt;
+        }
+    }
+    cout<<ans<<endl;
+}
+
+int main(){
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+    return 0;
+}

@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/*
+  i want the maximum balance which is the GCD   so for example if 4,4,6,2  --> GCD will be 2 but 4,4,4 --> GCD will be 4
+
+
+  Therefore i have to  maximize the GCD by let most of the position be the same value like 420 69   ---> 6 6 6 ... 6 12
+
+*/
+void solve(){
+    int n,m,temt;
+    cin>>n>>m;
+    int keep=n;
+    for(int i=1;i*i<=n;i++){ // for all factor of n   and  i represent as sub-problems
+        if(n%i!=0)continue;
+        if(i>=m)keep=min(keep,i);
+        if(n/i>=m)keep=min(keep,n/i);
+    }
+    cout<<n/keep<<endl;
+
+
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+}

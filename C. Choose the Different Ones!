@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+void solve(){
+   int n,m,k;
+   cin>>n>>m>>k;
+   vector<int>a(n),b(m);
+   vector<bool>checka(1e6+1,false),checkb(1e6+1,false);
+   for(int i=0;i<n;i++){
+        cin>>a[i];
+        checka[a[i]]=true;
+   }
+   for(int i=0;i<m;i++){
+        cin>>b[i];
+        checkb[b[i]]=true;
+   }
+   int counta=0,countb=0;
+   bool ans=false;
+   for(int i=1;i<=k;i++){
+       if(checka[i]&&!checkb[i])counta++;
+        else if(checkb[i]&&!checka[i])countb++;
+        else if(!checka[i]&&!checkb[i]){
+            ans=true;
+            break;
+        }
+   }
+   for(int i=1;i<=k;i++){//check for the elements that have both in array a and b such that if counta <countb so adding+1 to counta ,otherwise
+        if(checka[i]&&checkb[i]){
+            if(counta>countb)countb++;
+            else counta++;
+        }
+   }
+   if(ans==true)cout<<"NO"<<endl;
+   else{
+        if(counta>=k/2&&countb>=k/2)cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+   }
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    ll t;
+    cin>>t;
+    while(t--)solve();
+
+}

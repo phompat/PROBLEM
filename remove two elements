@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+    why i keep each temt.length()==3 is because ,for example, at position 0,1,2,3,4,5   , you can delete [0,1] or [1,2] after deleting the length will -1 and 
+    if you choose to erase [0,1] the 2nd will be the first element ,if you choose to erase [1,2] the position 0  will be the first element. 
+    .... Therefore if this case temt[2] ==temt[0] ,there is only one delete
+
+*/
+    
 void solve(){
     int n;
     string a,temt;

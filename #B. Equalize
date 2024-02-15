@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+////consider this problem as each range
 void solve(){
     int n;
     cin>>n;
@@ -13,6 +14,10 @@ void solve(){
         e.insert(a[i]+n);
         s.insert(a[i]+1);
     }
+    ///**** using set to have all distinct numbers of array a  because from permutation there are also distinct numbers that will be
+            added to the array a    if 1,1,2  and the target is 3 so 1 need to be added 2 and after that 2 is already used so number
+            1 in the second position can not be added 2
+    ****///
     for(auto x:e){
         keep.push_back(x);
     }

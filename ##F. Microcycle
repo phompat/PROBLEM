@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+int pa[200100],startnode,weight,endnode;
+vector<int>ans;
+vector<pair<int,int>>a[200100];
+bool visited[200100];
+vector<pair<int,pair<int,int>>>v;
+
+int root(int x){
+    if(pa[x]==x)return x;
+    else return pa[x]=root(pa[x]);
+}
+
+int dfs(int x){
+    if(x==endnode)return true;
+    for(pair<int,int>temt:a[x]){
+        if(visited[temt.first])continue;
+        ans.push_back(temt.first);
+        visited[temt.first]=true;
+        if(dfs(temt.first))return true;
+        ans.pop_back();
+    }
+    return false;
+}
+void solve(){
+    int n,m;
+    cin>>n>>m;
+    for(int i=0;i<=n;i++){
+        pa[i]=i,visited[i]=false,a[i].clear();
+    }
+    v.clear();
+    for(int i=0;i<m;i++){
+        int u,V,w;
+        cin>>u>>V>>w;
+        v.push_back({w,{u,V}});
+    }
+    sort(v.begin(),v.end());
+    for(int i=m-1;i>=0;i--){
+        a[v[i].second.first].push_back({v[i].second.second,v[i].first}),a[v[i].second.second].push_back({v[i].second.first,v[i].first});
+        int rootu=root(v[i].second.first);
+        int rootv=root(v[i].second.second);
+        if(rootu==rootv){
+            startnode=v[i].second.first,weight=v[i].first,endnode=v[i].second.second;
+        }
+        else pa[rootv]=pa[rootu];
+    }
+    visited[startnode]=true;
+    ans.push_back(startnode);
+    dfs(startnode);
+    cout<<weight<<" "<<ans.size()<<endl;
+    for(int i=0;i<ans.size();i++)cout<<ans[i]<<" ";
+    cout<<endl;
+    ans.clear();
+
+
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;cin>>t;
+    while(t--)solve();
+}

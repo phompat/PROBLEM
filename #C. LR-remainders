@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/* (a*b*c*)%m   ==  (a%m * b%m * c%m)%m
+
+    4 6
+    3 1 4 2
+    LRRL
+
+    Therefore --> 3 is removed first,then 2,then 4,then 1
+
+                ---> erase 1 which is the last element so to find mod --> it is easy to find mod  (1%m)
+                    ---> then erase 2  before the last element , so to find mod --> i need (2*1)%m == (2%m * 1%m)%m which 1%m i already calculated from previous line
+
+
+*/
+
+void solve(){
+    ll n,m;
+    cin>>n>>m;
+    vector<ll>a(n),keep;
+    deque<ll>d;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        d.push_back(a[i]);
+    }
+    string b;cin>>b;
+    for(int i=0;i<n;i++){
+        if(b[i]=='L'){keep.push_back(d.front()),d.pop_front();}
+        else {keep.push_back(d.back()),d.pop_back();}
+    }
+    ll temt=1;
+    reverse(keep.begin(),keep.end());
+    vector<ll>ans;
+    for(int i=0;i<keep.size();i++){
+        temt*=keep[i];
+        temt%=m;
+        ans.push_back(temt);
+    }
+    reverse(ans.begin(),ans.end());
+    for(int i=0;i<ans.size();i++)cout<<ans[i]<<" ";
+    cout<<endl;
+
+
+}
+int main(){
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+    return 0;
+}

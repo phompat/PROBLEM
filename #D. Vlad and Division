@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+/*
+    every element need to store in 31 binary bits    --->   From Problem ,if  the first element that was store is  000000...01010
+                                                                        so the another element that i can store is only 111111...10101
+
+                                                                        ****Therefore each group can contain the at most 2 elements****
+
+*/
+
+string bit(ll x){
+    string temt;
+    while(x>0){
+        temt+=(x%2)+'0';
+        x/=2;
+    }
+    while(temt.length()<31)temt+='0';
+    return temt;
+
+}
+void solve(){
+    ll n;
+    cin>>n;
+    vector<ll>a(n);
+    map<string,int>m;
+    set<string>keep;
+    ll ans=0;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        string b=bit(a[i]);
+        keep.insert(b);
+        string c;// 00...011000 --> 11...100111
+        for(int i=0;i<31;i++){
+            if(b[i]=='1')c+='0';
+            else c+='1';
+        }
+        m[b]++;
+        if(m[c]>0){
+            ans++;
+            m[b]--;
+            m[c]--;
+        }
+
+    }
+    for(auto x:keep){
+        if(m[x]>0)ans+=m[x];
+    }
+    cout<<ans<<endl;
+}
+int main()
+{
+    ll t;cin>>t;
+    while(t--)solve();
+    return 0;
+}

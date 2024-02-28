@@ -12,10 +12,15 @@ void solve(){
     for(int i=1;i<n;i++){
         if(a[i]==temt)have=true;
     }
-    if(have==false)cout<<"YES"<<endl;//there is only one smallest number so for example ---> 1,2,3,4,5,6  (((((1%2)%3)%4)%5)%6)==1 not equal 0
+    //****there is only one smallest number so for example ---> 1,2,3,4,5,6  (((((1%2)%3)%4)%5)%6)==1 not equal 0
+    if(have==false)cout<<"YES"<<endl;
     else{
         for(int i=1;i<n;i++){
-            //check whether there is ((a[i]%the smallest)%the smallest)<the smallest  if there is that number,so after all process  ---> result will not be 0 
+            //****check whether there is ((a[i]%the smallest)%the smallest)<the smallest  if there is that number,so after all process  ---> result will not be 0
+            /*   For example   2,2,5,10,2,10,10  --->there are 3 smallest numbers, so the way to check not equal 0 is ((5%2)%2)==1
+                                                                                    (((5%2)%2)%2)%10%10%10 == 1 which is not equal 0
+            */
+            
             int x=a[i]%temt;
             if((x%temt)<temt&&x>0){
                 cout<<"YES"<<endl;

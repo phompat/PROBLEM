@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+void solve(){
+    ll n,ans=0;
+    cin>>n;
+    vector<ll>a(n);
+    map<ll,ll>mp;
+    for(int i=0;i<n;i++)cin>>a[i];
+    for(int i=0;i<n;i++){
+        for(int j=2;j*j<=a[i];j++){
+            while(a[i]%(j*j)==0){
+                a[i]/=(j*j);
+            }
+        }    //****to find the number that is not pow(x,even number)
+        ans+=mp[a[i]];
+        mp[a[i]]++;
+    }
+    ll numberzero=0;
+    for(int i=0;i<n;i++){
+        if(a[i]==0)numberzero++;
+    }
+    ans+=(numberzero*(n-numberzero));
+    cout<<ans<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    solve();
+    return 0;
+}

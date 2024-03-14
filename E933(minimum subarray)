@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+//**minimum of subarray of size k using deque
+void solve(){
+    ll n,m,k,d;
+    cin>>n>>m>>k>>d;
+    ll a[n+1][m+1];
+    for(int i=0;i<n;i++)for(int j=0;j<m;j++)cin>>a[i][j];
+    vector<ll>ans(n+10,0);
+    for(int i=0;i<n;i++){
+        deque<ll>q;//keep the position that the element in the front will be the smallest element.
+        q.push_back(0);
+        vector<ll>v(m);
+        v[0]=1;
+        for(int j=1;j<=m-1;j++){
+            if(q.front()<j-d-1)q.pop_front();
+            v[j]=v[q.front()]+a[i][j]+1;
+            while(!q.empty()&&v[q.back()]>=v[j]){
+                q.pop_back();
+            }
+            q.push_back(j);
+        }
+        ans[i+1]=v[m-1];
+    }
+    ll answer=LLONG_MAX;
+    for(int i=1;i<=n;i++)ans[i]=ans[i-1]+ans[i];
+    for(int i=1;i<=n;i++){
+        if(i>=k)answer=min(answer,ans[i]-ans[i-k]);
+    }
+    cout<<answer<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+}

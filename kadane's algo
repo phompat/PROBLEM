@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+void solve(){
+    ll n,m;
+    cin>>n>>m;
+    vector<ll>a(n);
+    ll sum=0,kadane=0,answer=0;
+    //*******inside this loop is the kadane's algorithm*******//
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        sum+=a[i];
+        answer+=a[i];
+        if(sum<0)sum=0;
+        kadane=max(kadane,sum);
+    }
+    //*******************************************************//
+    for(int i=0;i<m;i++){
+        answer+=kadane;
+        answer+=(1000000007);
+        answer%=(1000000007);
+        kadane*=2;
+        kadane%=1000000007;
+    }
+    cout<<answer<<"\n";
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);
+    int t;
+    cin>>t;
+    while(t--)solve();
+}
